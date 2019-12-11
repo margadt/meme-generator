@@ -9,15 +9,62 @@
     display: block;
 }
 
-h1.impact{
-    font-family: Impact;
-    font-size: 30px;
-    text-emphasis: stroke white;
+img{
+    height: 100px;
+    width: 100px;
 }
 
-h1.impactv2{
-    font-family: impactv2;
-    font-size: 30px;
-    text-emphasis: stroke white;
+.main-menu {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
 
+li {
+    margin: 5px;
+    padding: 0;
+    list-style-type: none;
+}
+.nav-title{
+    text-align: center;
+    margin-bottom: 5vh;
+    font-family: sans-serif;
+    font-size: 1.2rem;
+    text-decoration: underline;
+}
+
+.download-btn {
+    text-rendering: auto;
+    color: buttontext;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: center;
+    align-items: flex-start;
+    cursor: default;
+    background-color: #ffa048;
+    box-sizing: border-box;
+    margin: 0em;
+    font: 400 13.3333px Arial;
+    padding: 1px 6px;
+    border-width: 2px;
+    border-style: outset;
+    border-color: buttonface;
+    border-image: initial;
+    text-decoration: none;
+}
+
+
+
+/* Helpers */
+
+.flex{
+    display:flex;
+}
+
+.flex.wrap{
+    flex-wrap: wrap;
 }

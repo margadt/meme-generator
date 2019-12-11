@@ -1,12 +1,20 @@
 let gCurrImg;
+let gStrokeColor = '#000000';
+let gFillColor = '#ffffff';
+let gTxtId = 1;
 let gMeme = {
     selectedImgId: 1, selectedTxtIdx: 0,
     txts: [
         {
+            id: 1,
             line: 'Mother Fu....',
-            size: 20,
+            size: 35,
             align: 'left',
-            color: 'white'
+            color: 'white',
+            x: 50,
+            y: 50,
+            h: 0,
+            w: 0
         }
     ]
 };
@@ -21,10 +29,11 @@ function init() {
     gCanvas.width = 500;
     gCanvas.height = 500;
 
-    drawImg();
-    setTimeout(() => {
-        drawText(gMeme.txts[0].line,100,100);
-    }, 750); 
+    document.querySelector('.fill-color').value = '#ffffff';
+    renderPictures();
+
+    gCanvas.addEventListener('click', check, false);
+
     // window.addEventListener('resize',
     //     function () {
     //         gCanvas.width = window.innerWidth - (window.innerWidth / 5);
@@ -35,8 +44,6 @@ function init() {
 
 
 function drawImg() {
-    // const img = document.querySelector('img');
-    // gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height)
     if (gCurrImg)
         gCtx.drawImage(gCurrImg, 0, 0, gCanvas.width, gCanvas.height)
     else {
@@ -46,20 +53,22 @@ function drawImg() {
         };
         gCurrImg.src = getImgUrlToDraw(1);
     }
-    // NOTE: the proportion of the image - should be as the canvas,
-    // otherwise the image gets distorted
 }
 
-function drawText(txt, x, y) { 
+function drawText(txt) {
     gCtx.save();
-    gCtx.font = "bold 40px Impact";
-    gCtx.fillStyle = 'white';
-    gCtx.fillText(`${txt}`.toUpperCase(), x, y);
-    gCtx.strokeText(`${txt}`.toUpperCase(), x, y);
-    gCtx.restore()
+    gCtx.font = `bold ${txt.size}px Impact`;
+    gCtx.textAlign = gMeme.txts[gMeme.selectedTxtIdx].align;
+    gCtx.fillStyle = gFillColor;
+    gCtx.strokeStyle = gStrokeColor;
+    gCtx.fillText(txt.line.toUpperCase(), txt.x, txt.y);
+    gCtx.strokeText(txt.line.toUpperCase(), txt.x, txt.y);
+    gMeme.txts[gMeme.selectedTxtIdx].w = gCtx.measureText(txt.line.toUpperCase()).width;
+    gMeme.txts[gMeme.selectedTxtIdx].h = gMeme.txts[gMeme.selectedTxtIdx].size;
+    gCtx.restore();
 }
 
-function renderPictures(){
+function renderPictures() {
     let imgs = getImgsToRender();
     let elImgContaier = document.querySelector('.imgs-container');
     let renderImgs = imgs.map((img) => {
@@ -71,10 +80,66 @@ function renderPictures(){
 
 }
 
-function onSelectImg(id){
+function onSelectImg(id) {
     let img = getImgById(id);
     gCurrImg = new Image();
     gCurrImg.src = img.url;
 
+    gMeme.selectedImgId = id;
+    gMeme.selectedTxtIdx = 0;
+
+    renderAll();
+}
+
+function onSetColor() {
+    gStrokeColor = document.querySelector('.color').value;
+    renderAll();
+}
+
+function onSetFillColor() {
+    gFillColor = document.querySelector('.fill-color').value;
+    renderAll();
+}
+
+
+function onSetFontSize(diff) {
+    gMeme.txts[gMeme.selectedTxtIdx].size += diff;
+    renderAll();
+}
+
+function renderTxtsOnCanvas() {
+    if (gMeme.txts.length > 0) {
+        gMeme.txts.forEach(txt => drawText(txt));
+    };
+}
+
+function onSetTxtYPos(diff) {
+    gMeme.txts[gMeme.selectedTxtIdx].y += diff;
+
+    renderAll()
+}
+
+function onSetTxt(elTxt) {
+    let txt = elTxt.value;
+    gMeme.txts[gMeme.selectedTxtIdx].line = txt;
+    renderAll()
+}
+
+
+function renderAll() {
     drawImg();
+    renderTxtsOnCanvas();
+}
+
+
+
+function check(ev) {
+    var pos = { x: ev.offsetX, y: ev.offsetY };
+
+    gMeme.txts.forEach(txt => {
+        if (pos.x >= txt.x && pos.x <= txt.x + txt.w &&
+            pos.y <= txt.y && pos.y >= txt.h - txt.y) {
+            return gMeme.selectedTxtIdx = txt.id;
+        };
+    });
 }

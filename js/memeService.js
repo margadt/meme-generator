@@ -1,11 +1,33 @@
 let gKeywordCountMap = {};
 let gNextId = 1;
 let gImgs = [
-    { id: gNextId++, url: 'imgs/003.jpg', keywords: ['trump'] },
-    { id: gNextId++, url: 'imgs/004.jpg', keywords: ['puppy'] }
+    createImg('imgs/001.jpg', ['trump']),
+    createImg('imgs/002.jpg', ['puppy']),
+    createImg('imgs/003.jpg', ['kid', 'succesful']),
+    createImg('imgs/004.jpg', ['baby', 'dog', 'sleep']),
+    createImg('imgs/005.jpg', ['cat', 'sleep']),
+    createImg('imgs/006.jpg', ['wonka']),
+    createImg('imgs/007.jpg', ['kid', 'evil']),
+    createImg('imgs/008.jpg', ['oldman']),
+    createImg('imgs/009.jpg', ['alien', 'history']),
+    createImg('imgs/010.jpg', ['kid']),
+    createImg('imgs/011.jpg', ['obama', 'laugh']),
+    createImg('imgs/012.jpg', ['kiss', 'boxing']),
+    createImg('imgs/013.jpg', ['leonardo']),
+    createImg('imgs/014.jpg', ['morpheous']),
+    createImg('imgs/015.jpg', ['lotr', 'one does not simply']),
+    createImg('imgs/016.jpg', ['star trek']),
+    createImg('imgs/017.jpg', ['putin']),
+    createImg('imgs/018.jpg', ['buzz'])
 ];
 
-
+function createImg(url, keywords){
+    return {
+        id: gNextId++,
+        url,
+        keywords
+    };
+}
 
 function getImgUrlToDraw(id) {
     return gImgs[getImgIdxById(id)].url;
