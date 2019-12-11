@@ -21,6 +21,10 @@ function init() {
     gCanvas.width = 500;
     gCanvas.height = 500;
 
+    drawImg();
+    setTimeout(() => {
+        drawText(gMeme.txts[0].line,100,100);
+    }, 750); 
     // window.addEventListener('resize',
     //     function () {
     //         gCanvas.width = window.innerWidth - (window.innerWidth / 5);
@@ -40,7 +44,7 @@ function drawImg() {
         gCurrImg.onload = () => {
             gCtx.drawImage(gCurrImg, 0, 0, gCanvas.width, gCanvas.height)
         };
-        gCurrImg.src = getImgUrlToDraw();
+        gCurrImg.src = getImgUrlToDraw(1);
     }
     // NOTE: the proportion of the image - should be as the canvas,
     // otherwise the image gets distorted
