@@ -1,6 +1,4 @@
 let gCurrImg;
-let gStrokeColor = '#000000';
-let gFillColor = '#ffffff';
 let gTxtId = 1;
 let isProcessing = 0;
 let gMeme = {
@@ -11,7 +9,8 @@ let gMeme = {
             line: 'Mother Fu....',
             size: 35,
             align: 'left',
-            color: 'white',
+            color: '#ffffff',
+            stroke: '#000000',
             x: 50,
             y: 50,
             h: 0,
@@ -63,8 +62,8 @@ function drawText(txt) {
     gCtx.save();
     gCtx.font = `bold ${txt.size}px Impact`;
     gCtx.textAlign = gMeme.txts[gMeme.selectedTxtIdx].align;
-    gCtx.fillStyle = gFillColor;
-    gCtx.strokeStyle = gStrokeColor;
+    gCtx.fillStyle = gMeme.txts[gMeme.selectedTxtIdx].color;
+    gCtx.strokeStyle = gMeme.txts[gMeme.selectedTxtIdx].stroke;
     gCtx.fillText(txt.line.toUpperCase(), txt.x, txt.y);
     gCtx.strokeText(txt.line.toUpperCase(), txt.x, txt.y);
     gMeme.txts[gMeme.selectedTxtIdx].w = gCtx.measureText(txt.line.toUpperCase()).width;
@@ -96,12 +95,12 @@ function onSelectImg(id) {
 }
 
 function onSetColor() {
-    gStrokeColor = document.querySelector('.color').value;
+    gMeme.txts[gMeme.selectedTxtIdx].stroke = document.querySelector('.color').value;
     renderAll();
 }
 
 function onSetFillColor() {
-    gFillColor = document.querySelector('.fill-color').value;
+    gMeme.txts[gMeme.selectedTxtIdx].color = document.querySelector('.fill-color').value;
     renderAll();
 }
 
@@ -119,9 +118,14 @@ function renderTxtsOnCanvas() {
 
 function onSetTxtYPos(diff) {
     gMeme.txts[gMeme.selectedTxtIdx].y += diff;
-
-    renderAll()
+    renderAll();
 }
+
+function onSetTxtXPos(diff) {
+    gMeme.txts[gMeme.selectedTxtIdx].x += diff;
+    renderAll();
+}
+
 
 function onSetTxt(elTxt) {
     let txt = elTxt.value;
@@ -158,32 +162,21 @@ function onAddText() {
         line: 'New Text',
         size: 35,
         align: 'left',
-        color: 'white',
+        color: '#ffffff',
+        stroke: '#000000',
         x: 50,
-        y: gMeme.txts[gMeme.selectedTxtIdx].y + gMeme.txts[gMeme.selectedTxtIdx].size,
+        y: gMeme.txts.length === 0 ? 50 : (gMeme.txts[gMeme.selectedTxtIdx].y + gMeme.txts[gMeme.selectedTxtIdx].size),
         h: 0,
         w: 0
     }
-    gMeme.txts.push(txt)
-    gMeme.selectedTxtIdx++;
+    gMeme.selectedTxtIdx = gMeme.txts.length ? ++gMeme.selectedTxtIdx : 0;
+    gMeme.txts.push(txt);
     drawText(gMeme.txts[gMeme.selectedTxtIdx]);
     document.querySelector('.txt-editor').value = gMeme.txts[gMeme.selectedTxtIdx].line;
 }
 
+function onDeleteTxt() {
+    gMeme.txts.splice(gMeme.selectedTxtIdx--, 1);
+    renderAll();
+}
 
-// let gMeme = {
-//     selectedImgId: 1, selectedTxtIdx: 0,
-//     txts: [
-//         {
-//             id: gTxtId++,
-//             line: 'Mother Fu....',
-//             size: 35,
-//             align: 'left',
-//             color: 'white',
-//             x: 50,
-//             y: 50,
-//             h: 0,
-//             w: 0
-//         }
-//     ]
-// };
