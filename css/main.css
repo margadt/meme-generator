@@ -1,0 +1,23 @@
+.canvas-container {
+    background-color: rgb(255, 168, 168);
+    padding: 10px;
+}
+
+.my-canvas {
+    margin: 20px auto;
+    border: 1px solid blue;
+    display: block;
+}
+
+h1.impact{
+    font-family: Impact;
+    font-size: 30px;
+    text-emphasis: stroke white;
+}
+
+h1.impactv2{
+    font-family: impactv2;
+    font-size: 30px;
+    text-emphasis: stroke white;
+
+}
