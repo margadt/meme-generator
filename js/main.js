@@ -2,11 +2,12 @@ let gCurrImg;
 let gStrokeColor = '#000000';
 let gFillColor = '#ffffff';
 let gTxtId = 1;
+let isProcessing = 0;
 let gMeme = {
     selectedImgId: 1, selectedTxtIdx: 0,
     txts: [
         {
-            id: 1,
+            id: gTxtId++,
             line: 'Mother Fu....',
             size: 35,
             align: 'left',
@@ -18,8 +19,6 @@ let gMeme = {
         }
     ]
 };
-
-
 
 
 function init() {
@@ -56,6 +55,11 @@ function drawImg() {
 }
 
 function drawText(txt) {
+    if (++isProcessing >= 3) {
+        return;
+    } else {
+        isProcessing = 0;
+    }
     gCtx.save();
     gCtx.font = `bold ${txt.size}px Impact`;
     gCtx.textAlign = gMeme.txts[gMeme.selectedTxtIdx].align;
@@ -134,12 +138,52 @@ function renderAll() {
 
 
 function check(ev) {
-    var pos = { x: ev.offsetX, y: ev.offsetY };
+    let pos = { x: ev.offsetX, y: ev.offsetY };
 
-    gMeme.txts.forEach(txt => {
-        if (pos.x >= txt.x && pos.x <= txt.x + txt.w &&
-            pos.y <= txt.y && pos.y >= txt.h - txt.y) {
-            return gMeme.selectedTxtIdx = txt.id;
-        };
+    let selectedIdx = gMeme.txts.findIndex(txt => {
+        return (pos.x >= txt.x && pos.x <= txt.x + txt.w &&
+            pos.y <= txt.y && pos.y >= txt.y - txt.h);
     });
+
+    gMeme.selectedTxtIdx = selectedIdx;
+    document.querySelector('.txt-editor').value = gMeme.txts[gMeme.selectedTxtIdx].line;
 }
+
+
+function onAddText() {
+    if (gMeme.txts.length > 4) return;
+
+    let txt = {
+        id: gTxtId++,
+        line: 'New Text',
+        size: 35,
+        align: 'left',
+        color: 'white',
+        x: 50,
+        y: gMeme.txts[gMeme.selectedTxtIdx].y + gMeme.txts[gMeme.selectedTxtIdx].size,
+        h: 0,
+        w: 0
+    }
+    gMeme.txts.push(txt)
+    gMeme.selectedTxtIdx++;
+    drawText(gMeme.txts[gMeme.selectedTxtIdx]);
+    document.querySelector('.txt-editor').value = gMeme.txts[gMeme.selectedTxtIdx].line;
+}
+
+
+// let gMeme = {
+//     selectedImgId: 1, selectedTxtIdx: 0,
+//     txts: [
+//         {
+//             id: gTxtId++,
+//             line: 'Mother Fu....',
+//             size: 35,
+//             align: 'left',
+//             color: 'white',
+//             x: 50,
+//             y: 50,
+//             h: 0,
+//             w: 0
+//         }
+//     ]
+// };
