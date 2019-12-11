@@ -24,8 +24,8 @@ function init() {
     gCanvas = document.querySelector('.my-canvas');
     gCtx = gCanvas.getContext('2d')
 
-    gCanvas.width = 500;
-    gCanvas.height = 500;
+    gCanvas.width = window.innerWidth - (window.innerWidth / 5);
+            gCanvas.height = window.innerHeight - (window.innerHeight / 5);
 
     document.querySelector('.fill-color').value = '#ffffff';
     renderPictures();
@@ -73,7 +73,7 @@ function drawText(txt) {
 
 function renderPictures() {
     let imgs = getImgsToRender();
-    let elImgContaier = document.querySelector('.imgs-container');
+    let elImgContaier = document.querySelector('.gallery-bg');
     let renderImgs = imgs.map((img) => {
         return `<img src=${img.url} onclick="onSelectImg(${img.id})"> \n`
     });
@@ -176,6 +176,7 @@ function onAddText() {
 }
 
 function onDeleteTxt() {
+    if(gMeme.selectedTxtIdx < 0) return;
     gMeme.txts.splice(gMeme.selectedTxtIdx--, 1);
     renderAll();
 }

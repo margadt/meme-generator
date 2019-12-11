@@ -1,3 +1,17 @@
+/* base */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+img {
+    width: 100%;
+}
+
 .canvas-container {
     background-color: rgb(255, 168, 168);
     padding: 10px;
@@ -9,23 +23,66 @@
     display: block;
 }
 
-img{
-    height: 100px;
-    width: 100px;
+/* layout */
+
+.header-bg {
+    width: 100%;
+    background-color: #ff7f00;
 }
 
-.main-menu {
+.logo-mobile {
+    width: 133px;
+    height: 22px;
+    background-color: var(--white);
+    background-image: url('../imgs/mobile-logo.png');
+    margin-left: 10px;
+    margin-top: 22px;
+    margin-bottom: 22px;
+}
+
+.mobile-menu {
+    width: 28px;
+    height: 20px;
+    background-color: var(--white);
+    background-image: url('../imgs/hamburger.png');
+    margin-top: 22px;
+    margin-right: 10px;
+    margin-bottom: 22px;
+}
+
+.mobile-home {
+    width: 100%;
+    height: 1522px;
+    background-color: var(--white);
+}
+
+.Enter-search-keyword {
+    width: 206px;
+    height: 19px;
+    font-family: Montserrat;
+    font-size: 19px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: right;
+    color: #7a7a7a;
+}
+
+.editor-menu {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
 }
 
-li {
+.editor-menu li {
     margin: 5px;
     padding: 0;
     list-style-type: none;
 }
-.nav-title{
+
+.nav-title {
     text-align: center;
     margin-bottom: 5vh;
     font-family: sans-serif;
@@ -57,14 +114,50 @@ li {
     text-decoration: none;
 }
 
+/* gallery */
 
+.gallery-bg {
+    width: 100%;
+    height: 696px;
+    background-color: #e3e3e3;
+    margin-top: 2vh;
+}
+
+.gallery-bg img {
+    width: 163px;
+    height: 163px;
+}
+
+.gallery-bg img:nth-child(odd) {
+    margin-left: 10vw;
+}
+
+.gallery-bg img:nth-child(-n+2) {
+    margin-top: 2vh;
+}
 
 /* Helpers */
 
-.flex{
-    display:flex;
+.flex {
+    display: flex;
 }
 
-.flex.wrap{
+.flex.wrap {
     flex-wrap: wrap;
+}
+
+.flex.column {
+    flex-direction: column;
+}
+
+.space-between {
+    justify-content: space-between;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.justify-center {
+    justify-content: center;
 }
