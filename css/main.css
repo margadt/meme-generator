@@ -124,12 +124,13 @@ img {
 }
 
 .gallery-bg img {
-    width: 163px;
-    height: 163px;
+    width: 46vw;
+    /* height: 163px; */
 }
 
 .gallery-bg img:nth-child(odd) {
-    margin-left: 10vw;
+    margin-left: 3vw;
+    margin-right: 1vw;
 }
 
 .gallery-bg img:nth-child(-n+2) {
