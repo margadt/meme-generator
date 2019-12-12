@@ -52,8 +52,12 @@
             </canvas>
         </main>
         <ul class="editor-menu clean-list flex wrap">
-            <li><input title="Type your text" type="text" class="txt-editor" name="txt"
+            <li class="txt-edit-container flex justify-center align-center"><input title="Type your text" type="text" class="txt-editor" name="txt"
                     placeholder="Type your text here" onkeyup="onSetTxt(this)" /></li>
+            <li><div class="add-txt" onclick="onAddText()">
+            <img src="imgs/icons/add.png"</div></li>
+            <li><div class="delete-txt" onclick="onDeleteTxt()">
+            <img src="imgs/icons/trash.png"/></li>
             <li><label class="label" for="fill-color">Fill-Color:</label></li>
             <li><input title="Select fill color" type="color" class="fill-color" name="color"
                     onchange="onSetFillColor()" /></li>
@@ -66,8 +70,6 @@
             <li><button class="move-up" onclick="onSetTxtYPos(-5)">Move Up ⬆️</button></li>
             <li><button class="move-right" onclick="onSetTxtXPos(5)">Move Right ➡️</button></li>
             <li><button class="move-left" onclick="onSetTxtXPos(-5)">Move Left ⬅️</button></li>
-            <li><button class="add-txt" onclick="onAddText()">Add Text ➕</button></li>
-            <li><button class="delete-txt" onclick="onDeleteTxt()">Delete Text</button></li>
             <li>
                 <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
                     <input name="img" id="imgData" type="hidden" />

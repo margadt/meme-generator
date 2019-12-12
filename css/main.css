@@ -281,12 +281,22 @@ footer {
     margin: 5px;
     padding: 0;
     list-style-type: none;
+    width: 41px;
+    height: 41px;
+    border-radius: 12px;
+}
+
+.txt-edit-container{
+    flex-basis: 100%;
 }
 
 .txt-editor {
     width: 90vw;
-    height: 39px;
+    height: 2.5rem;
     border-radius: 12px;
+}
+
+.txt-editor::placeholder{
     text-indent: 20px;
     font-family: montserrat;
     font-size: 16px;

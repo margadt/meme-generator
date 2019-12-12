@@ -158,7 +158,7 @@ function check(ev) {
 
 
 function onAddText() {
-    if (gMeme.txts.length > 4) return;
+    if (gMeme.txts.length > 2) return;
 
     let txt = {
         id: gTxtId++,
