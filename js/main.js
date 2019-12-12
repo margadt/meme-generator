@@ -25,7 +25,7 @@ function init() {
     gCtx = gCanvas.getContext('2d')
 
     gCanvas.width = window.innerWidth - (window.innerWidth / 5);
-            gCanvas.height = window.innerHeight - (window.innerHeight / 5);
+    gCanvas.height = window.innerHeight - (window.innerHeight / 5);
 
     document.querySelector('.fill-color').value = '#ffffff';
     renderPictures();
@@ -73,6 +73,9 @@ function drawText(txt) {
 
 function renderPictures() {
     let imgs = getImgsToRender();
+    if(window.innerWidth <= 440){
+        imgs = imgs.slice(0,8);
+    }
     let elImgContaier = document.querySelector('.gallery-bg');
     let renderImgs = imgs.map((img) => {
         return `<img src=${img.url} onclick="onSelectImg(${img.id})"> \n`

@@ -1,3 +1,20 @@
+/* fonts */
+
+@font-face {
+    font-family: montserrat;
+    src: url(../fonts/Montserrat-Medium.ttf);
+}
+
+@font-face {
+    font-family: montserrat-bold;
+    src: url(../fonts/Montserrat-Bold.ttf);
+}
+
+@font-face {
+    font-family: montserrat-thin;
+    src: url(../fonts/Montserrat-Thin.ttf);
+}
+
 /* base */
 
 * {
@@ -56,18 +73,154 @@ img {
     background-color: var(--white);
 }
 
-.Enter-search-keyword {
-    width: 206px;
-    height: 19px;
-    font-family: Montserrat;
+.enter-search-keyword {
+    font-family: montserrat;
     font-size: 19px;
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
     line-height: normal;
     letter-spacing: normal;
-    text-align: right;
+    text-align: left;
     color: #7a7a7a;
+    margin-top: 15px;
+    border: 0;
+    border-style: none;
+    border-bottom: 1px solid black;
+}
+
+input.enter-search-keyword {
+    background-image: url(../imgs/search-icon.png);
+    background-repeat: no-repeat;
+    background-position: center right;
+    text-indent: 20px;
+}
+
+input.enter-search-keyword:focus {
+    background-image: none;
+}
+
+.about img {
+    width: 158px;
+    height: 158px;
+    margin-top: 44px;
+}
+
+.about h1 {
+    font-family: montserrat-bold;
+    height: 19px;
+    font-size: 22px;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ff7f00;
+    margin: 0;
+    margin-top: 18px;
+}
+
+.about p {
+    font-family: montserrat;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #000000;
+    margin: 0;
+    padding: 22px 38px;
+}
+
+.social-links-container a {
+    display: inline-block;
+    width: 39px;
+    height: 39px;
+    border-radius: 12px;
+    background-color: #ff7f00;
+    margin: 0px 4px 62px;
+}
+
+.linked-in {
+    background-image: url('../imgs/linkedin-logo.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.facebook {
+    background-image: url('../imgs/facebook-logo.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.github {
+    background-image: url('../imgs/github-logo.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* footer */
+
+footer {
+    width: 100%;
+    height: 207px;
+    background-color: #ff7f00;
+}
+
+.footer-logo {
+    width: 133px;
+    height: 22px;
+    background-color: var(--white);
+    margin-bottom: 16px;
+}
+
+.tos {
+    height: 19px;
+    font-family: montserrat-thin;
+    font-size: 19px;
+    font-weight: 100;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: white;
+}
+
+/* gallery */
+
+.gallery-bg {
+    width: 100%;
+    background-color: #e3e3e3;
+    margin-top: 2vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    gap: 8px;
+}
+
+.gallery-bg img:nth-child(odd) {
+    padding-left: 3vw;
+}
+
+.gallery-bg img:nth-child(even) {
+    padding-right: 3vw;
+}
+
+.gallery-bg img:nth-child(-n+2) {
+    margin-top: 2vh;
+}
+
+.gallery-bg img:nth-last-child(-n+2) {
+    margin-bottom: 2vh;
+}
+
+/* editor */
+
+.editor-container {
+    display: none;
 }
 
 .editor-menu {
@@ -112,29 +265,6 @@ img {
     border-color: buttonface;
     border-image: initial;
     text-decoration: none;
-}
-
-/* gallery */
-
-.gallery-bg {
-    width: 100%;
-    height: 696px;
-    background-color: #e3e3e3;
-    margin-top: 2vh;
-}
-
-.gallery-bg img {
-    width: 46vw;
-    /* height: 163px; */
-}
-
-.gallery-bg img:nth-child(odd) {
-    margin-left: 3vw;
-    margin-right: 1vw;
-}
-
-.gallery-bg img:nth-child(-n+2) {
-    margin-top: 2vh;
 }
 
 /* Helpers */
