@@ -14,12 +14,20 @@
 
     <header class="header-bg flex space-between align-center">
         <div class="logo-mobile"></div>
-        <div class="mobile-menu" onclick="onToggleMobileMenu()"></div>
+        <div class="mobile-menu-btn" onclick="onToggleMenu()"></div>
+        <div class="mobile-menu-modal">
+            <div class="modal-x" onclick="onToggleMenu()">x</div>
+            <img class="modal-logo" src="imgs/mobile-logo.png" alt="">
+            <ul class="main-menu flex column justify-center">
+                <li><a href="#gallery" onclick="onToggleMenu()">Gallery</a></li>
+                <li><a href="#about" onclick="onToggleMenu()">About</a></li>
+            </ul>
+        </div>
     </header>
     <main class="mobile-home flex column align-center">
         <input class="enter-search-keyword" type="text" placeholder="Enter search keyword">
-        <div class="gallery-bg"></div>
-        <div class="about flex column align-center">
+        <div id="gallery" class="gallery-bg"></div>
+        <div id="about" class="about flex column align-center">
             <img src="imgs/alina.png" alt="">
             <h1>Monica Geller</h1>
             <p>is a fictional character, one of the six main characters who appears on the American sitcom Friends
@@ -37,14 +45,13 @@
         </footer>
     </main>
 
-    <!-- <div class="editor-container flex"> -->
-    <div class="editor-container">
+    <div class="editor-container column">
         <main class="canvas-container">
             <canvas class="my-canvas">
                 Update your browser to enjoy canvas!
             </canvas>
         </main>
-        <ul class="editor-menu flex wrap">
+        <ul class="editor-menu clean-list flex wrap">
             <li><input title="Type your text" type="text" class="txt-editor" name="txt"
                     placeholder="Type your text here" onkeyup="onSetTxt(this)" /></li>
             <li><label class="label" for="fill-color">Fill-Color:</label></li>

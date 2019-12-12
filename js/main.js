@@ -24,8 +24,8 @@ function init() {
     gCanvas = document.querySelector('.my-canvas');
     gCtx = gCanvas.getContext('2d')
 
-    gCanvas.width = window.innerWidth - (window.innerWidth / 5);
-    gCanvas.height = window.innerHeight - (window.innerHeight / 5);
+    gCanvas.width = window.innerWidth - (window.innerWidth / 9);
+    gCanvas.height = window.innerWidth - (window.innerWidth / 9);
 
     document.querySelector('.fill-color').value = '#ffffff';
     renderPictures();
@@ -78,7 +78,7 @@ function renderPictures() {
     }
     let elImgContaier = document.querySelector('.gallery-bg');
     let renderImgs = imgs.map((img) => {
-        return `<img src=${img.url} onclick="onSelectImg(${img.id})"> \n`
+        return `<img src=${img.url} onclick="onSelectImg(${img.id});onContentToggler()"> \n`
     });
 
     elImgContaier.innerHTML = renderImgs.join('');
@@ -184,3 +184,13 @@ function onDeleteTxt() {
     renderAll();
 }
 
+function onToggleMenu() {
+    document.querySelector('.mobile-menu-modal').classList.toggle('menu-open');
+    document.querySelector('.mobile-menu-btn').classList.toggle('menu-close');
+
+}
+
+function onContentToggler(){
+    document.querySelector('.mobile-home').classList.toggle('menu-close');
+    document.querySelector('.editor-container').classList.toggle('flex');
+}
