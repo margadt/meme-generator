@@ -10,11 +10,9 @@
 </head>
 
 <body onload="init()">
-
-
     <header class="header-bg flex space-between align-center">
         <div class="logo-mobile"></div>
-        <div class="mobile-menu-btn" onclick="onToggleMenu()"></div>
+        <div class="mobile-menu-btn" onclick="onHamburger()"></div>
         <div class="mobile-menu-modal">
             <div class="modal-x" onclick="onToggleMenu()">x</div>
             <img class="modal-logo" src="imgs/mobile-logo.png" alt="">
@@ -24,6 +22,7 @@
             </ul>
         </div>
     </header>
+
     <main class="mobile-home flex column align-center">
         <input class="enter-search-keyword" type="text" placeholder="Enter search keyword">
         <div id="gallery" class="gallery-bg"></div>
@@ -51,38 +50,58 @@
                 Update your browser to enjoy canvas!
             </canvas>
         </main>
-        <ul class="editor-menu clean-list flex wrap">
-            <li class="txt-edit-container flex justify-center align-center"><input title="Type your text" type="text" class="txt-editor" name="txt"
-                    placeholder="Type your text here" onkeyup="onSetTxt(this)" /></li>
-            <li><div class="add-txt" onclick="onAddText()">
-            <img src="imgs/icons/add.png"</div></li>
-            <li><div class="delete-txt" onclick="onDeleteTxt()">
-            <img src="imgs/icons/trash.png"/></li>
-            <li><label class="label" for="fill-color">Fill-Color:</label></li>
-            <li><input title="Select fill color" type="color" class="fill-color" name="color"
-                    onchange="onSetFillColor()" /></li>
-            <li><label class="label" for="color">Stroke Color:</label></li>
-            <li><input title="Select stroke color" type="color" class="color" name="color" onchange="onSetColor()" />
-            </li>
-            <li><button class="font-down" onclick="onSetFontSize(-1)">Font Size ➖</button></li>
-            <li><button class="font-up" onclick="onSetFontSize(1)">Font Size ➕</button></li>
-            <li><button class="move-down" onclick="onSetTxtYPos(5)">Move Down ⬇️</button></li>
-            <li><button class="move-up" onclick="onSetTxtYPos(-5)">Move Up ⬆️</button></li>
-            <li><button class="move-right" onclick="onSetTxtXPos(5)">Move Right ➡️</button></li>
-            <li><button class="move-left" onclick="onSetTxtXPos(-5)">Move Left ⬅️</button></li>
-            <li>
-                <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
-                    <input name="img" id="imgData" type="hidden" />
-                    <button class="btn" type="submit">Publish 🌐</button>
-                    <div class="share-container"></div>
-                </form>
-            </li>
-            <li><a href="#" class="download-btn" onclick="downloadCanvas(this)" download="">Download 💾</a></li>
-        </ul>
-    </div>
+        <div class="editor-menu clean-list">
+            <input title="Type your text" type="text" class="txt-editor" name="txt" placeholder="Type your text here"
+                onkeyup="onSetTxt(this)" />
+            <div class="font-up flex justify-center align-center" onclick="onSetFontSize(3)">
+                <img src="imgs/icons/increase font - icon.png" />
+            </div>
+            <div class="font-down flex justify-center align-center" onclick="onSetFontSize(-3)">
+                <img src="imgs/icons/decrease font - icon.png" />
+            </div>
+            <div class="delete-txt flex justify-center align-center" onclick="onDeleteTxt()">
+                <img src="imgs/icons/trash.png" />
+            </div>
+            <div class="add-txt flex justify-center align-center" onclick="onAddText()">
+                <img src="imgs/icons/add.png" />
+            </div>
+            <div class="move-up flex justify-center align-center" onclick="onSetTxtYPos(-10)">
+                <img src="imgs/icons/arrow-up.png" />
+            </div>
+            <div class="move-down flex justify-center align-center" onclick="onSetTxtYPos(10)">
+                <img src="imgs/icons/arrow-down.png" />
+            </div>
+            <div class="move-left flex justify-center align-center" onclick="onSetTxtXPos(-10)">
+                <img src="imgs/icons/arrow-left.png" />
+            </div>
+            <div class="move-right flex justify-center align-center" onclick="onSetTxtXPos(10)">
+                <img src="imgs/icons/arrow-right.png" />
+            </div>
+            <input title="Select stroke color" type="color" class="color" onchange="onSetColor()" />
+            <input title="Select fill color" type="color" class="fill-color" onchange="onSetFillColor()" />
+        </div>
 
+        <button class="share" onclick="onToggleShare()">Share</button>
+
+        <div class="share-modal">
+            <div class="share-x" onclick="onToggleShare()">x</div>
+            <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
+                <input name="img" id="imgData" type="hidden" />
+                <button class="publish-btn" type="submit">Share</button>
+                <div class="share-container"></div>
+            </form>
+            <a href="#" class="download-btn" onclick="downloadCanvas(this)" download="">Download</a>
+        </div>
+
+        <footer class="flex column justify-center align-center">
+            <img src="imgs/mobile-logo.png" class="footer-logo">
+            <small class="tos">all rights reserved 2019</small>
+        </footer>
+    </div>
     <script src="js/memeService.js"></script>
+    <script src="js/upload-service.js"></script>
     <script src="js/main.js"></script>
 </body>
 
 </html>
+

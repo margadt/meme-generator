@@ -272,31 +272,32 @@ footer {
 }
 
 .editor-menu {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-areas: "txt-editor txt-editor txt-editor txt-editor txt-editor" ". font-up font-down delete ." "add move-up move-down move-left move-right" ". . . stroke fill";
 }
 
-.editor-menu li {
-    margin: 5px;
+.editor-menu div {
+    margin: 1vw auto;
     padding: 0;
-    list-style-type: none;
     width: 41px;
     height: 41px;
     border-radius: 12px;
+    background-color: white;
 }
 
-.txt-edit-container{
-    flex-basis: 100%;
+.editor-menu div img {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 80%;
 }
 
 .txt-editor {
     width: 90vw;
     height: 2.5rem;
     border-radius: 12px;
-}
-
-.txt-editor::placeholder{
+    grid-area: txt-editor;
+    margin-left: 5vw;
     text-indent: 20px;
     font-family: montserrat;
     font-size: 16px;
@@ -309,36 +310,151 @@ footer {
     color: #000000;
 }
 
-.nav-title {
+.txt-editor::placeholder {
+    text-indent: 20px;
+    font-family: montserrat;
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: #000000;
+}
+
+.add-txt {
+    grid-area: add;
+    cursor: pointer;
+}
+
+.delete-txt {
+    grid-area: delete;
+    cursor: pointer;
+}
+
+input.fill-color {
+    margin: 1vw auto;
+    grid-area: fill;
+    width: 41px;
+    height: 41px;
+    cursor: pointer;
+
+}
+
+input.color {
+    margin: 1vw auto;
+    grid-area: stroke;
+    width: 41px;
+    height: 41px;
+    cursor: pointer;
+}
+
+.font-down {
+    grid-area: font-down;
+    cursor: pointer;
+}
+
+.font-up {
+    grid-area: font-up;
+    cursor: pointer;
+}
+
+.move-up {
+    grid-area: move-up;
+    cursor: pointer;
+}
+
+.move-down {
+    grid-area: move-down;
+    cursor: pointer;
+}
+
+.move-right {
+    grid-area: move-right;
+    cursor: pointer;
+}
+
+.move-left {
+    grid-area: move-left;
+    cursor: pointer;
+}
+
+.share{
+    width: 40vw;
+    margin: 30px 30vw;
+    border-radius: 12px;
+    background-color: #ff7f00;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+    font-family: montserrat;
+    font-size: 20px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
     text-align: center;
-    margin-bottom: 5vh;
-    font-family: sans-serif;
-    font-size: 1.2rem;
-    text-decoration: underline;
 }
 
 .download-btn {
-    text-rendering: auto;
-    color: buttontext;
-    letter-spacing: normal;
-    word-spacing: normal;
-    text-transform: none;
-    text-indent: 0px;
-    text-shadow: none;
-    display: inline-block;
-    text-align: center;
-    align-items: flex-start;
-    cursor: default;
-    background-color: #ffa048;
-    box-sizing: border-box;
-    margin: 0em;
-    font: 400 13.3333px Arial;
-    padding: 1px 6px;
-    border-width: 2px;
-    border-style: outset;
-    border-color: buttonface;
-    border-image: initial;
+    display:block;
+    width: 70vw;
+    border-radius: 12px;
+    background-color: #ff7f00;
     text-decoration: none;
+    color: white;
+}
+
+.publish-btn{
+    width: 70vw;
+    border-radius: 12px;
+    background-color: #ff7f00;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+    font-family: montserrat;
+    font-size: 20px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+}
+
+.share-modal {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+    bottom: 15vh;
+    left: 10vw;
+    width: 80vw;
+    height: 30vw;
+    font-family: montserrat;
+    font-size: 20px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    background-color: white;
+    border: 1px solid black;
+}
+
+.share-x{
+    position: relative;
+    z-index: 1;
+    top: -2px;
+    left: 46%;
+    width: 22px;
+    height: 23px;
+    color: #ff7f00;
+    cursor: pointer;
 }
 
 /* Helpers */

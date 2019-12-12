@@ -1,24 +1,6 @@
 let gCurrImg;
-let gTxtId = 1;
-let isProcessing = 0;
-let gMeme = {
-    selectedImgId: 1, selectedTxtIdx: 0,
-    txts: [
-        {
-            id: gTxtId++,
-            line: 'Mother Fu....',
-            size: 35,
-            align: 'left',
-            color: '#ffffff',
-            stroke: '#000000',
-            x: 50,
-            y: 50,
-            h: 0,
-            w: 0
-        }
-    ]
-};
-
+let gIsProcessing = 0;
+let gIsMainPage = true;
 
 function init() {
     gCanvas = document.querySelector('.my-canvas');
@@ -31,13 +13,14 @@ function init() {
     renderPictures();
 
     gCanvas.addEventListener('click', check, false);
+    gCanvas.addEventListener("mousemove", checkPointer);
 
-    // window.addEventListener('resize',
-    //     function () {
-    //         gCanvas.width = window.innerWidth - (window.innerWidth / 5);
-    //         gCanvas.height = window.innerHeight - (window.innerHeight / 5);
-    //         drawImg()
-    //     })
+    window.addEventListener('resize',
+        function () {
+            gCanvas.width = window.innerWidth - (window.innerWidth / 9);
+            gCanvas.height = window.innerWidth - (window.innerWidth / 9);
+            renderAll();
+        });
 }
 
 
@@ -54,27 +37,28 @@ function drawImg() {
 }
 
 function drawText(txt) {
-    if (++isProcessing >= 3) {
+    if (++gIsProcessing >= 3) {
         return;
     } else {
-        isProcessing = 0;
+        gIsProcessing = 0;
     }
     gCtx.save();
     gCtx.font = `bold ${txt.size}px Impact`;
-    gCtx.textAlign = gMeme.txts[gMeme.selectedTxtIdx].align;
-    gCtx.fillStyle = gMeme.txts[gMeme.selectedTxtIdx].color;
-    gCtx.strokeStyle = gMeme.txts[gMeme.selectedTxtIdx].stroke;
+    let meme = getGmeme();
+    gCtx.textAlign = meme.txts[meme.selectedTxtIdx].align;
+    gCtx.fillStyle = meme.txts[meme.selectedTxtIdx].color;
+    gCtx.strokeStyle = meme.txts[meme.selectedTxtIdx].stroke;
     gCtx.fillText(txt.line.toUpperCase(), txt.x, txt.y);
     gCtx.strokeText(txt.line.toUpperCase(), txt.x, txt.y);
-    gMeme.txts[gMeme.selectedTxtIdx].w = gCtx.measureText(txt.line.toUpperCase()).width;
-    gMeme.txts[gMeme.selectedTxtIdx].h = gMeme.txts[gMeme.selectedTxtIdx].size;
+    meme.txts[meme.selectedTxtIdx].w = gCtx.measureText(txt.line.toUpperCase()).width;
+    meme.txts[meme.selectedTxtIdx].h = meme.txts[meme.selectedTxtIdx].size;
     gCtx.restore();
 }
 
 function renderPictures() {
     let imgs = getImgsToRender();
-    if(window.innerWidth <= 440){
-        imgs = imgs.slice(0,8);
+    if (window.innerWidth <= 480) {
+        imgs = imgs.slice(0, 8);
     }
     let elImgContaier = document.querySelector('.gallery-bg');
     let renderImgs = imgs.map((img) => {
@@ -88,51 +72,59 @@ function renderPictures() {
 
 function onSelectImg(id) {
     let img = getImgById(id);
+    let meme = getGmeme();
     gCurrImg = new Image();
     gCurrImg.src = img.url;
 
-    gMeme.selectedImgId = id;
-    gMeme.selectedTxtIdx = 0;
+    meme.selectedImgId = id;
+    meme.selectedTxtIdx = 0;
 
     renderAll();
 }
 
 function onSetColor() {
-    gMeme.txts[gMeme.selectedTxtIdx].stroke = document.querySelector('.color').value;
+    let meme = getGmeme();
+    meme.txts[meme.selectedTxtIdx].stroke = document.querySelector('.color').value;
     renderAll();
 }
 
 function onSetFillColor() {
-    gMeme.txts[gMeme.selectedTxtIdx].color = document.querySelector('.fill-color').value;
+    let meme = getGmeme();
+    meme.txts[meme.selectedTxtIdx].color = document.querySelector('.fill-color').value;
     renderAll();
 }
 
 
 function onSetFontSize(diff) {
-    gMeme.txts[gMeme.selectedTxtIdx].size += diff;
+    let meme = getGmeme();
+    meme.txts[meme.selectedTxtIdx].size += diff;
     renderAll();
 }
 
 function renderTxtsOnCanvas() {
-    if (gMeme.txts.length > 0) {
-        gMeme.txts.forEach(txt => drawText(txt));
+    let meme = getGmeme();
+    if (meme.txts.length > 0) {
+        meme.txts.forEach(txt => drawText(txt));
     };
 }
 
 function onSetTxtYPos(diff) {
-    gMeme.txts[gMeme.selectedTxtIdx].y += diff;
+    let meme = getGmeme();
+    meme.txts[meme.selectedTxtIdx].y += diff;
     renderAll();
 }
 
 function onSetTxtXPos(diff) {
-    gMeme.txts[gMeme.selectedTxtIdx].x += diff;
+    let meme = getGmeme();
+    meme.txts[meme.selectedTxtIdx].x += diff;
     renderAll();
 }
 
 
 function onSetTxt(elTxt) {
+    let meme = getGmeme();
     let txt = elTxt.value;
-    gMeme.txts[gMeme.selectedTxtIdx].line = txt;
+    meme.txts[meme.selectedTxtIdx].line = txt;
     renderAll()
 }
 
@@ -146,19 +138,33 @@ function renderAll() {
 
 function check(ev) {
     let pos = { x: ev.offsetX, y: ev.offsetY };
+    let meme = getGmeme();
 
-    let selectedIdx = gMeme.txts.findIndex(txt => {
+    let selectedIdx = meme.txts.findIndex(txt => {
         return (pos.x >= txt.x && pos.x <= txt.x + txt.w &&
             pos.y <= txt.y && pos.y >= txt.y - txt.h);
     });
 
-    gMeme.selectedTxtIdx = selectedIdx;
-    document.querySelector('.txt-editor').value = gMeme.txts[gMeme.selectedTxtIdx].line;
+    meme.selectedTxtIdx = selectedIdx;
+    document.querySelector('.txt-editor').value = meme.txts[meme.selectedTxtIdx].line;
 }
 
+function checkPointer(ev) {
+    let pos = { x: ev.offsetX, y: ev.offsetY };
+    let meme = getGmeme();
+
+    meme.txts.forEach(txt => {
+        if (pos.x >= txt.x && pos.x <= txt.x + txt.w &&
+            pos.y <= txt.y && pos.y >= txt.y - txt.h) {
+            document.body.style.cursor = "pointer";
+        }
+    });
+    document.body.style.cursor = "";
+}
 
 function onAddText() {
-    if (gMeme.txts.length > 2) return;
+    let meme = getGmeme();
+    if (meme.txts.length > 2) return;
 
     let txt = {
         id: gTxtId++,
@@ -167,30 +173,64 @@ function onAddText() {
         align: 'left',
         color: '#ffffff',
         stroke: '#000000',
-        x: 50,
-        y: gMeme.txts.length === 0 ? 50 : (gMeme.txts[gMeme.selectedTxtIdx].y + gMeme.txts[gMeme.selectedTxtIdx].size),
+        x: 20,
+        y: 0,
         h: 0,
         w: 0
     }
-    gMeme.selectedTxtIdx = gMeme.txts.length ? ++gMeme.selectedTxtIdx : 0;
-    gMeme.txts.push(txt);
-    drawText(gMeme.txts[gMeme.selectedTxtIdx]);
-    document.querySelector('.txt-editor').value = gMeme.txts[gMeme.selectedTxtIdx].line;
+    meme.selectedTxtIdx = meme.txts.length ? ++meme.selectedTxtIdx : 0;
+    switch (meme.selectedTxtIdx) {
+        case 0:
+            txt.y = (gCanvas.height / 5);
+            break;
+        case 1:
+            txt.y = (gCanvas.height - (gCanvas.height / 4));
+            break;
+        case 2:
+            txt.y = (gCanvas.height / 2);
+            break;
+    }
+    meme.txts.push(txt);
+    drawText(meme.txts[meme.selectedTxtIdx]);
+    document.querySelector('.txt-editor').value = meme.txts[meme.selectedTxtIdx].line;
 }
 
 function onDeleteTxt() {
-    if(gMeme.selectedTxtIdx < 0) return;
-    gMeme.txts.splice(gMeme.selectedTxtIdx--, 1);
+    let meme = getGmeme();
+    if (meme.selectedTxtIdx < 0) return;
+    meme.txts.splice(meme.selectedTxtIdx--, 1);
     renderAll();
 }
 
-function onToggleMenu() {
+function onHamburger() {
     document.querySelector('.mobile-menu-modal').classList.toggle('menu-open');
     document.querySelector('.mobile-menu-btn').classList.toggle('menu-close');
+}
+
+function onToggleMenu() {
+    if (gIsMainPage) {
+        document.querySelector('.mobile-menu-modal').classList.toggle('menu-open');
+        document.querySelector('.mobile-menu-btn').classList.toggle('menu-close');
+    } else {
+        document.querySelector('.mobile-menu-modal').classList.toggle('menu-open');
+        document.querySelector('.mobile-menu-btn').classList.toggle('menu-close');
+        onContentToggler();
+    }
 
 }
 
-function onContentToggler(){
+function onContentToggler() {
+    gIsMainPage = !gIsMainPage;
     document.querySelector('.mobile-home').classList.toggle('menu-close');
     document.querySelector('.editor-container').classList.toggle('flex');
+}
+
+function downloadCanvas(elLink) {
+    const data = gCanvas.toDataURL();
+    elLink.href = data;
+    elLink.download = 'my-meme.png';
+}
+
+function onToggleShare() {
+    document.querySelector('.share-modal').classList.toggle('flex');
 }

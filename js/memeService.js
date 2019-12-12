@@ -1,5 +1,6 @@
 let gKeywordCountMap = {};
 let gNextId = 1;
+let gTxtId = 1;
 let gImgs = [
     createImg('imgs/001.jpg', ['trump']),
     createImg('imgs/002.jpg', ['puppy']),
@@ -20,6 +21,24 @@ let gImgs = [
     createImg('imgs/017.jpg', ['putin']),
     createImg('imgs/018.jpg', ['buzz'])
 ];
+
+let gMeme = {
+    selectedImgId: 1, selectedTxtIdx: 0,
+    txts: [
+        {
+            id: gTxtId++,
+            line: 'Lorem ipsum dolor sit amet',
+            size: 22,
+            align: 'left',
+            color: '#ffffff',
+            stroke: '#000000',
+            x: 20,
+            y: 50,
+            h: 0,
+            w: 0
+        }
+    ]
+};
 
 function createImg(url, keywords){
     return {
@@ -47,4 +66,8 @@ function getImgById(id) {
 
 function getImgsToRender() {
     return gImgs;
+}
+
+function getGmeme(){
+    return gMeme;
 }
