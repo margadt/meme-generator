@@ -25,12 +25,33 @@ function init() {
 
 
 function drawImg() {
+    let maxWidth = gCanvas.width; // Max width for the image
+    let maxHeight = gCanvas.height;    // Max height for the image
+    let ratio = 0;  // Used for aspect ratio
+    let width = gCurrImg.width;    // Current image width
+    let height = gCurrImg.height;  // Current image height
+
+    // Check if the current width is larger than the max
+    if(width > height){
+        ratio = maxWidth / width;   // get ratio for scaling image
+        gCurrImg.width = maxWidth; // Set new width
+        gCurrImg.height = height * ratio;  // Scale height based on ratio
+        gCanvas.height = height * ratio;    // Reset height to match scaled image
+        gCanvas.width = width * ratio;    // Reset width to match scaled image
+    }else{  // Check if current height is larger than max
+        ratio = maxHeight / height; // get ratio for scaling image
+        gCurrImg.height = maxHeight;   // Set new height
+        gCurrImg.width = width * ratio;    // Scale width based on ratio
+        gCanvas.width = width * ratio;    // Reset width to match scaled image
+        gCanvas.height = height * ratio;    // Reset height to match scaled image
+    }
+
     if (gCurrImg)
-        gCtx.drawImage(gCurrImg, 0, 0, gCanvas.width, gCanvas.height)
+        gCtx.drawImage(gCurrImg, 0, 0, gCurrImg.width, gCurrImg.height);
     else {
         gCurrImg = new Image();
         gCurrImg.onload = () => {
-            gCtx.drawImage(gCurrImg, 0, 0, gCanvas.width, gCanvas.height)
+            gCtx.drawImage(gCurrImg, 0, 0, gCanvas.width, gCanvas.height);
         };
         gCurrImg.src = getImgUrlToDraw(1);
     }
@@ -72,32 +93,30 @@ function renderPictures() {
 
 function onSelectImg(id) {
     let img = getImgById(id);
-    let meme = getGmeme();
     gCurrImg = new Image();
     gCurrImg.src = img.url;
 
-    meme.selectedImgId = id;
-    meme.selectedTxtIdx = 0;
+    setGmemeId(id);
+    setGmemeTxtIdx(0);
 
     renderAll();
 }
 
 function onSetColor() {
-    let meme = getGmeme();
-    meme.txts[meme.selectedTxtIdx].stroke = document.querySelector('.color').value;
+    let val = document.querySelector('.color').value;
+    setCurrTxtStroke(val);
     renderAll();
 }
 
 function onSetFillColor() {
-    let meme = getGmeme();
-    meme.txts[meme.selectedTxtIdx].color = document.querySelector('.fill-color').value;
+    let val = document.querySelector('.fill-color').value;
+    setCurrTxtFillColor(val);
     renderAll();
 }
 
 
 function onSetFontSize(diff) {
-    let meme = getGmeme();
-    meme.txts[meme.selectedTxtIdx].size += diff;
+    setCurrTxtFontSize(diff);
     renderAll();
 }
 
@@ -109,25 +128,19 @@ function renderTxtsOnCanvas() {
 }
 
 function onSetTxtYPos(diff) {
-    let meme = getGmeme();
-    meme.txts[meme.selectedTxtIdx].y += diff;
+    setCurrTxtYPos(diff);
     renderAll();
 }
 
 function onSetTxtXPos(diff) {
-    let meme = getGmeme();
-    meme.txts[meme.selectedTxtIdx].x += diff;
+    setCurrTxtXPos(diff);
     renderAll();
 }
 
-
 function onSetTxt(elTxt) {
-    let meme = getGmeme();
-    let txt = elTxt.value;
-    meme.txts[meme.selectedTxtIdx].line = txt;
+    setCurrTxtLine(elTxt);
     renderAll()
 }
-
 
 function renderAll() {
     drawImg();
@@ -163,42 +176,11 @@ function checkPointer(ev) {
 }
 
 function onAddText() {
-    let meme = getGmeme();
-    if (meme.txts.length > 2) return;
-
-    let txt = {
-        id: gTxtId++,
-        line: 'New Text',
-        size: 35,
-        align: 'left',
-        color: '#ffffff',
-        stroke: '#000000',
-        x: 20,
-        y: 0,
-        h: 0,
-        w: 0
-    }
-    meme.selectedTxtIdx = meme.txts.length ? ++meme.selectedTxtIdx : 0;
-    switch (meme.selectedTxtIdx) {
-        case 0:
-            txt.y = (gCanvas.height / 5);
-            break;
-        case 1:
-            txt.y = (gCanvas.height - (gCanvas.height / 4));
-            break;
-        case 2:
-            txt.y = (gCanvas.height / 2);
-            break;
-    }
-    meme.txts.push(txt);
-    drawText(meme.txts[meme.selectedTxtIdx]);
-    document.querySelector('.txt-editor').value = meme.txts[meme.selectedTxtIdx].line;
+    addTxt();
 }
 
 function onDeleteTxt() {
-    let meme = getGmeme();
-    if (meme.selectedTxtIdx < 0) return;
-    meme.txts.splice(meme.selectedTxtIdx--, 1);
+    deleteCurrTxt();
     renderAll();
 }
 

@@ -245,23 +245,30 @@ footer {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto;
-    gap: 8px;
+    gap: 2vw;
+}
+
+.gallery-bg img{
+    object-fit: cover;
+    object-position: center;
+    width: 49vw;
+    height: 42vw;
 }
 
 .gallery-bg img:nth-child(odd) {
-    padding-left: 3vw;
+    padding-left: 1vw;
 }
 
 .gallery-bg img:nth-child(even) {
-    padding-right: 3vw;
+    padding-right: 1vw;
 }
 
 .gallery-bg img:nth-child(-n+2) {
-    margin-top: 2vh;
+    margin-top: 1vh;
 }
 
 .gallery-bg img:nth-last-child(-n+2) {
-    margin-bottom: 2vh;
+    margin-bottom: 1vh;
 }
 
 /* editor */
@@ -455,6 +462,11 @@ input.color {
     height: 23px;
     color: #ff7f00;
     cursor: pointer;
+}
+
+.share-container a{
+    color: #ff7f00;
+
 }
 
 /* Helpers */

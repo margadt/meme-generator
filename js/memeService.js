@@ -40,7 +40,7 @@ let gMeme = {
     ]
 };
 
-function createImg(url, keywords){
+function createImg(url, keywords) {
     return {
         id: gNextId++,
         url,
@@ -68,6 +68,76 @@ function getImgsToRender() {
     return gImgs;
 }
 
-function getGmeme(){
+function getGmeme() {
     return gMeme;
+}
+
+function setGmemeId(id) {
+    gMeme.selectedImgId = id;
+}
+
+function setGmemeTxtIdx(idx) {
+    gMeme.selectedTxtIdx = 0;
+}
+
+function setCurrTxtStroke(val) {
+    gMeme.txts[gMeme.selectedTxtIdx].stroke = val;
+}
+
+function setCurrTxtFillColor(val) {
+    gMeme.txts[gMeme.selectedTxtIdx].color = val;
+}
+
+function setCurrTxtFontSize(diff) {
+    gMeme.txts[gMeme.selectedTxtIdx].size += diff;
+}
+
+function setCurrTxtYPos(diff) {
+    gMeme.txts[gMeme.selectedTxtIdx].y += diff;
+}
+
+function setCurrTxtXPos(diff) {
+    gMeme.txts[gMeme.selectedTxtIdx].x += diff;
+}
+
+function setCurrTxtLine(elTxt) {
+    let txt = elTxt.value;
+    gMeme.txts[gMeme.selectedTxtIdx].line = txt;
+}
+
+function addTxt() {
+    if (gMeme.txts.length > 2) return;
+
+    let txt = {
+        id: gTxtId++,
+        line: 'New Text',
+        size: 35,
+        align: 'left',
+        color: '#ffffff',
+        stroke: '#000000',
+        x: 20,
+        y: 0,
+        h: 0,
+        w: 0
+    }
+    gMeme.selectedTxtIdx = gMeme.txts.length ? ++gMeme.selectedTxtIdx : 0;
+    switch (gMeme.selectedTxtIdx) {
+        case 0:
+            txt.y = (gCanvas.height / 5);
+            break;
+        case 1:
+            txt.y = (gCanvas.height - (gCanvas.height / 4));
+            break;
+        case 2:
+            txt.y = (gCanvas.height / 2);
+            break;
+    }
+    gMeme.txts.push(txt);
+    drawText(gMeme.txts[gMeme.selectedTxtIdx]);
+    document.querySelector('.txt-editor').value = gMeme.txts[gMeme.selectedTxtIdx].line;
+}
+
+function deleteCurrTxt() {
+    if (gMeme.selectedTxtIdx < 0) return;
+    gMeme.txts.splice(gMeme.selectedTxtIdx--, 1);
 }
