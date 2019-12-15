@@ -34,7 +34,7 @@ let gMeme = {
             stroke: '#000000',
             x: 20,
             y: 50,
-            h: 0,
+            h: 22,
             w: 0
         }
     ]
@@ -77,7 +77,7 @@ function setGmemeId(id) {
 }
 
 function setGmemeTxtIdx(idx) {
-    gMeme.selectedTxtIdx = 0;
+    gMeme.selectedTxtIdx = idx;
 }
 
 function setCurrTxtStroke(val) {
@@ -117,7 +117,7 @@ function addTxt() {
         stroke: '#000000',
         x: 20,
         y: 0,
-        h: 0,
+        h: 35,
         w: 0
     }
     gMeme.selectedTxtIdx = gMeme.txts.length ? ++gMeme.selectedTxtIdx : 0;
@@ -140,4 +140,16 @@ function addTxt() {
 function deleteCurrTxt() {
     if (gMeme.selectedTxtIdx < 0) return;
     gMeme.txts.splice(gMeme.selectedTxtIdx--, 1);
+}
+
+function setCurrTxtWidth(num){
+    gMeme.txts[gMeme.selectedTxtIdx].w = num;
+}
+
+function setCurrTxtHeight(num){
+    gMeme.txts[gMeme.selectedTxtIdx].h = num;
+}
+
+function getCurrTxt(){
+    return gMeme.txts[gMeme.selectedTxtIdx];
 }

@@ -11,7 +11,7 @@
 
 <body onload="init()">
     <header class="header-bg flex space-between align-center">
-        <div class="logo-mobile"></div>
+        <a class="logo-mobile" href="#" onclick="onLogo()"></a>
         <div class="mobile-menu-btn" onclick="onHamburger()"></div>
         <div class="mobile-menu-modal">
             <div class="modal-x" onclick="onToggleMenu()">x</div>
@@ -50,6 +50,7 @@
                 Update your browser to enjoy canvas!
             </canvas>
         </main>
+        <div class="txt-container"></div>
         <div class="editor-menu clean-list">
             <input title="Type your text" type="text" class="txt-editor" name="txt" placeholder="Type your text here"
                 onkeyup="onSetTxt(this)" />

@@ -32,18 +32,18 @@ function drawImg() {
     let height = gCurrImg.height;  // Current image height
 
     // Check if the current width is larger than the max
-    if(width > height){
+    if (width > height) {
         ratio = maxWidth / width;   // get ratio for scaling image
         gCurrImg.width = maxWidth; // Set new width
         gCurrImg.height = height * ratio;  // Scale height based on ratio
-        gCanvas.height = height * ratio;    // Reset height to match scaled image
-        gCanvas.width = width * ratio;    // Reset width to match scaled image
-    }else{  // Check if current height is larger than max
+        gCanvas.height = gCurrImg.height;    // Reset height to match scaled image
+        gCanvas.width = gCurrImg.width;    // Reset width to match scaled image
+    } else {  // Check if current height is larger than max
         ratio = maxHeight / height; // get ratio for scaling image
         gCurrImg.height = maxHeight;   // Set new height
         gCurrImg.width = width * ratio;    // Scale width based on ratio
-        gCanvas.width = width * ratio;    // Reset width to match scaled image
-        gCanvas.height = height * ratio;    // Reset height to match scaled image
+        gCanvas.width = gCurrImg.width;    // Reset width to match scaled image
+        gCanvas.height = gCurrImg.height;    // Reset height to match scaled image
     }
 
     if (gCurrImg)
@@ -71,8 +71,8 @@ function drawText(txt) {
     gCtx.strokeStyle = meme.txts[meme.selectedTxtIdx].stroke;
     gCtx.fillText(txt.line.toUpperCase(), txt.x, txt.y);
     gCtx.strokeText(txt.line.toUpperCase(), txt.x, txt.y);
-    meme.txts[meme.selectedTxtIdx].w = gCtx.measureText(txt.line.toUpperCase()).width;
-    meme.txts[meme.selectedTxtIdx].h = meme.txts[meme.selectedTxtIdx].size;
+    setCurrTxtWidth(gCtx.measureText(txt.line.toUpperCase()).width);
+    setCurrTxtHeight(meme.txts[meme.selectedTxtIdx].size);
     gCtx.restore();
 }
 
@@ -129,17 +129,20 @@ function renderTxtsOnCanvas() {
 
 function onSetTxtYPos(diff) {
     setCurrTxtYPos(diff);
+    txtContainer()
     renderAll();
 }
 
 function onSetTxtXPos(diff) {
     setCurrTxtXPos(diff);
+    txtContainer();
     renderAll();
 }
 
 function onSetTxt(elTxt) {
     setCurrTxtLine(elTxt);
     renderAll()
+    txtContainer();
 }
 
 function renderAll() {
@@ -158,8 +161,13 @@ function check(ev) {
             pos.y <= txt.y && pos.y >= txt.y - txt.h);
     });
 
-    meme.selectedTxtIdx = selectedIdx;
-    document.querySelector('.txt-editor').value = meme.txts[meme.selectedTxtIdx].line;
+    if (selectedIdx !== -1) {
+        setGmemeTxtIdx(selectedIdx);
+        txtContainer();
+        document.querySelector('.txt-editor').value = `${getCurrTxt().line}`;
+    }else{
+        document.querySelector('.txt-container').style.display = 'none';
+    }
 }
 
 function checkPointer(ev) {
@@ -169,10 +177,13 @@ function checkPointer(ev) {
     meme.txts.forEach(txt => {
         if (pos.x >= txt.x && pos.x <= txt.x + txt.w &&
             pos.y <= txt.y && pos.y >= txt.y - txt.h) {
-            document.body.style.cursor = "pointer";
+            console.log('cursor');
+            return document.body.style.cursor = "pointer";
+        } else {
+            return document.body.style.cursor = "";
         }
     });
-    document.body.style.cursor = "";
+
 }
 
 function onAddText() {
@@ -215,4 +226,31 @@ function downloadCanvas(elLink) {
 
 function onToggleShare() {
     document.querySelector('.share-modal').classList.toggle('flex');
+}
+
+function getCurrTxtWidth() {
+    let txt = getCurrTxt();
+    return gCtx.measureText(txt.line.toUpperCase()).width;
+}
+
+function txtContainer() {
+    let container = document.querySelector('.txt-container');
+    let txt = getCurrTxt();
+    let canvas = document.querySelector('.my-canvas');
+
+    container.style.display = 'block';
+    container.style.position = 'fixed';
+    container.style.width = (txt.w + 5) + 'px';
+    container.style.height = (txt.h + 5) + 'px';
+    container.style.top = (canvas.offsetTop + txt.y - txt.size) + 'px';
+    container.style.left = (canvas.offsetLeft + txt.x) + 'px';
+
+}
+
+function onLogo(){
+    document.querySelector('.mobile-home').classList.remove('menu-close');
+    document.querySelector('.editor-container').classList.remove('flex');
+    document.querySelector('.mobile-menu-modal').classList.remove('menu-open');
+    document.querySelector('.mobile-menu-btn').classList.remove('menu-close');
+
 }

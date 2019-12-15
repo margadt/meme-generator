@@ -340,6 +340,11 @@ footer {
     cursor: pointer;
 }
 
+.txt-container{
+    display: none;
+    border: 1px solid white;
+}
+
 input.fill-color {
     margin: 1vw auto;
     grid-area: fill;
